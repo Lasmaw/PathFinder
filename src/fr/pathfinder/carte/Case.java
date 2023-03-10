@@ -36,9 +36,9 @@ public class Case {
 		this.clicked=bool;
 	}
 	
-	Case(int x, int y, int value){
+	public Case(int x, int y, int val){
 		setPosition(x,y);
-		setValue(value);
+		setValue(val);
 		setColor(Color.GREEN);
 		setStart(false);
 		setFinish(false);
