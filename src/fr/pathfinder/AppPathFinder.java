@@ -9,7 +9,7 @@ public class AppPathFinder {
 
 	public static void main(String[] args) {
 		
-		Carte cart = new Carte(8);
+		Carte cart = new Carte(24);
 		//Ouvrir l'interface
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {

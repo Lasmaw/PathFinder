@@ -90,7 +90,7 @@ public class Interface extends JFrame implements ActionListener {
     }
 	
 	
-	public void pathWin(Carte map, JPanel win) {
+	public void pathWin(Carte map, JPanel win) { //Tableau de boutons
 		
         int size = map.size;
         int buttonSize = (1280 - 2 * 20) / size;
@@ -103,13 +103,12 @@ public class Interface extends JFrame implements ActionListener {
         		JButton button = new JButton(String.valueOf(i+j));
         		button.setPreferredSize(new Dimension(10,10));
         		if (i == 0 || i == size - 1 || j == 0 || j == size - 1) {
-        			
+        			button.addActionListener(new PathButtonListener());
         			button.setPreferredSize(new Dimension(buttonSize, buttonSize));
         		}
         		win.add(button);
         	}
-        }
-        
+        }        
         win.setVisible(true);
     }
 	
@@ -131,7 +130,12 @@ public class Interface extends JFrame implements ActionListener {
 		}
 	}
     
-	
+	private class PathButtonListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			getContentPane().add(panelPath);
+			getContentPane().validate();
+		}
+	}
 	
 	
 	
