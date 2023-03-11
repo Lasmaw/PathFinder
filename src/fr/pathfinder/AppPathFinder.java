@@ -14,8 +14,7 @@ public class AppPathFinder {
             }
         });
 		*/
-		
-		Carte cart = new Carte(4,"test");
+		Carte cart = new Carte(10);
 		
 		
 		

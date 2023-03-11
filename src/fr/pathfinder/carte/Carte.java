@@ -22,40 +22,35 @@ public class Carte {
 		this.map[x][y].setColor(col);
 	}
 	
-	public void createCart(int size) {
-		
+	public void fillBorder(int size) {
 		int i,j;
 		for(i=0;i<size;i++) {
 			for(j=0;j<size;j++) {
-				if(i<2 || j<2 || i>=size || j>=size) {
-					this.map[i][j]=new Case(i,j,-1);
-					editCaseValue(i,j,-1);
-				}
-				else {
-					this.map[i][j]=new Case(i,j,5);
-				}
-			}	
-		}
-	}
-	
-	
-	public void printCart(int size) { //Permet d'établir les bordures à -1
-		int i,j;
-		for(i=0;i<size+2;i++) {
-			for(j=0;j<size+2;j++) {
-				System.out.print(" " + this.map[i][j].value + " ");
+				if(i<2 || i>(size-3) || j<2 || j>(size-3)) editCaseValue(i,j,-1);
 			}
 		}
 	}
 	
+	public void showMap(int size) {
+		int i,j;
+		for(i=0;i<size;i++) {
+			for(j=0;j<size;j++) {
+				System.out.print(" "+this.map[i][j].value+" ");
+			}
+			System.out.print("\n");
+		}
+	}
 	
-	
-	public Carte(int size, String name){
-		map = new Case[size][size];
-		this.size=size;
-		this.name=name;
-		createCart(size);
-		printCart(size);
-		
+	public Carte(int size) {
+		size=size+4;
+		int i,j;
+		this.map=new Case[size][size];
+		for(i=0;i<size;i++) {
+			for(j=0;j<size;j++) {
+				this.map[i][j]=new Case(i,j,0);
+			}
+		}
+		fillBorder(size);
+		showMap(size);
 	}
 }
