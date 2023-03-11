@@ -4,8 +4,8 @@ import java.awt.Color;
 
 public class Carte {
 	
-	Case[][] map;
-	int size;
+	public Case[][] map;
+	public int size;
 	String name;
 	
 	//Méthodes
@@ -42,6 +42,7 @@ public class Carte {
 	}
 	
 	public Carte(int size) {
+		this.size=size;
 		size=size+4;
 		int i,j;
 		this.map=new Case[size][size];
@@ -51,6 +52,6 @@ public class Carte {
 			}
 		}
 		fillBorder(size);
-		showMap(size);
+		//showMap(size);
 	}
 }

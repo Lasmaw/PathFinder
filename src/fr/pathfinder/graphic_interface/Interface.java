@@ -1,9 +1,12 @@
 package fr.pathfinder.graphic_interface;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -11,22 +14,32 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import fr.pathfinder.carte.Carte;
+
 public class Interface extends JFrame implements ActionListener {
     
 	private static final long serialVersionUID = 1L;
 	
 	private JButton startBtn, quitBtn;
 	private JPanel panelMenu, panelPath;
+	Carte map;
+	Path path;
 	
-	public Interface() {
+	public Interface(Carte map) {
+		
+		
+
 		
 //************** Données de la fenêtre **************//
 		
         super("PathFinder");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
         setSize(1280,720);
-        setVisible(true);    
-
+        setVisible(true); 
+        setResizable(false);
+        
+        this.map=map;
 //************** Barre d'outils **************//
         
         JMenuBar barreDeMenu = new JMenuBar();
@@ -55,6 +68,14 @@ public class Interface extends JFrame implements ActionListener {
         startBtn.addActionListener(new StartButtonListener());
         quitBtn.addActionListener(new QuitButtonListener());
         
+//************** Boutons Path **************//
+        
+        startBtn = new JButton("Jouer");
+        quitBtn = new JButton("Quitter");
+        
+        startBtn.addActionListener(new StartButtonListener());
+        quitBtn.addActionListener(new QuitButtonListener());
+        
 //************** Panels **************//
         
         panelMenu = new JPanel();
@@ -62,10 +83,37 @@ public class Interface extends JFrame implements ActionListener {
         panelMenu.add(quitBtn);
         
         panelPath = new JPanel();
-        panelPath.setBackground(Color.RED);
+        pathWin(map, panelPath);
+
         
         getContentPane().add(panelMenu);
     }
+	
+	
+	public void pathWin(Carte map, JPanel win) {
+		
+        int size = map.size;
+        int buttonSize = (1280 - 2 * 20) / size;
+        
+        win.setLayout(new GridLayout(size, size));
+        win.setBorder(BorderFactory.createEmptyBorder(100, 350, 50, 350)); // north, west , south, east
+
+        for (int i = 0; i < size; i++) {
+        	for (int j = 0; j < size; j++) {
+        		JButton button = new JButton(String.valueOf(i+j));
+        		button.setPreferredSize(new Dimension(10,10));
+        		if (i == 0 || i == size - 1 || j == 0 || j == size - 1) {
+        			
+        			button.setPreferredSize(new Dimension(buttonSize, buttonSize));
+        		}
+        		win.add(button);
+        	}
+        }
+        
+        win.setVisible(true);
+    }
+	
+	
 	
 //************** Listeners **************//
 	
