@@ -1,20 +1,23 @@
 package fr.pathfinder.graphic_interface;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.tools.JavaFileManager;
 
 import fr.pathfinder.carte.Carte;
+import fr.pathfinder.carte.Case;
 
 public class Interface extends JFrame implements ActionListener {
     
@@ -28,7 +31,6 @@ public class Interface extends JFrame implements ActionListener {
 	public Interface(Carte map) {
 		
 		
-
 		
 //************** Données de la fenêtre **************//
 		
@@ -56,9 +58,9 @@ public class Interface extends JFrame implements ActionListener {
         
         setJMenuBar(barreDeMenu);
 
-        newCart.addActionListener(this);
-        openCart.addActionListener(this);
-        saveCart.addActionListener(this);
+        newCart.addActionListener(new fileCreater());
+        openCart.addActionListener(new fileChooser());
+        saveCart.addActionListener(new fileSaver());
         
 //************** Boutons menu **************//
         
@@ -106,7 +108,8 @@ public class Interface extends JFrame implements ActionListener {
         			button.addActionListener(new PathButtonListener());
         			button.setPreferredSize(new Dimension(buttonSize, buttonSize));
         		}
-        		win.add(button);
+        		map.map[i][j].btn=button;
+        		win.add(map.map[i][j].btn);
         	}
         }        
         win.setVisible(true);
@@ -121,6 +124,8 @@ public class Interface extends JFrame implements ActionListener {
 			getContentPane().remove(panelMenu);
 			getContentPane().add(panelPath);
 			getContentPane().validate();
+            System.out.println("Test");
+
 		}
 	}
 	
@@ -140,16 +145,55 @@ public class Interface extends JFrame implements ActionListener {
 	
 	
 	
-    public void actionPerformed(ActionEvent e) {
-        String commande = e.getActionCommand();
-        if (commande.equals("Nouveau fichier")) {
-            System.out.println("Option Nouveau fichier sélectionnée");
-        } else if (commande.equals("Charger fichier")) {
-            System.out.println("Option Charger fichier sélectionnée");
-        } else if (commande.equals("Enregistrer fichier")) {
-            System.out.println("Option Enregistrer fichier sélectionnée");
-        }
-    }
+    
+    
+//************** Fenêtre modif **************//
+	
+	private class fileCreater implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+	        JFileChooser chooser = new JFileChooser();
+	        chooser.setVisible(true);
+	        int retval = chooser.showDialog(Interface.this, "Test");
+	        File file = chooser.getSelectedFile();
+	    }
+	}
+	
+	
+	
+	private class fileChooser implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+	        JFileChooser chooser = new JFileChooser();
+	        chooser.setVisible(true);
+	        int userSelec = chooser.showOpenDialog(Interface.this);
+	        File file = chooser.getSelectedFile();
+	    }
+	}
+	
+	private class fileSaver implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			JFileChooser saver = new JFileChooser();
+			saver.setDialogTitle("Enregistrer le fichier");
+			saver.setVisible(true);
+			int usrSelec = saver.showSaveDialog(Interface.this);
+			
+			
+			if (usrSelec == JFileChooser.APPROVE_OPTION) {
+			    File fileToSave = saver.getSelectedFile();
+			    System.out.println("Enregistrer en tant que " + fileToSave.getAbsolutePath());
+			}
+			
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+
+
+	
     
 }
 

@@ -2,12 +2,15 @@ package fr.pathfinder.carte;
 
 import java.awt.Color;
 
+import javax.swing.JButton;
+
 public class Case {
 	
 	//Attributs
 	int posX, posY, value;
 	boolean clicked=false, start=false, finish=false;
 	Color color;
+	public JButton btn;
 	
 	//Méthodes
 	
