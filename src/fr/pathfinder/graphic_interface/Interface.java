@@ -1,10 +1,16 @@
 package fr.pathfinder.graphic_interface;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.OutputStreamWriter;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -14,10 +20,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.tools.JavaFileManager;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import fr.pathfinder.carte.Carte;
-import fr.pathfinder.carte.Case;
 
 public class Interface extends JFrame implements ActionListener {
     
@@ -28,6 +34,9 @@ public class Interface extends JFrame implements ActionListener {
 	Carte map;
 	Path path;
 	
+	JTextArea textArea;
+	JButton save;
+	
 	public Interface(Carte map) {
 		
 		
@@ -35,6 +44,7 @@ public class Interface extends JFrame implements ActionListener {
 //************** Données de la fenêtre **************//
 		
         super("PathFinder");
+        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setSize(1280,720);
@@ -149,16 +159,47 @@ public class Interface extends JFrame implements ActionListener {
     
 //************** Fenêtre modif **************//
 	
-	private class fileCreater implements ActionListener {
-		public void actionPerformed(ActionEvent event) {
-	        JFileChooser chooser = new JFileChooser();
-	        chooser.setVisible(true);
-	        int retval = chooser.showDialog(Interface.this, "Test");
-	        File file = chooser.getSelectedFile();
+	protected void saveToFile() {
+	    JFileChooser fileChooser = new JFileChooser();
+	    int retval = fileChooser.showSaveDialog(save);
+	    if (retval == JFileChooser.APPROVE_OPTION) {
+	      File file = fileChooser.getSelectedFile();
+	      if (file == null) {
+	        return;
+	      }
+	      if (!file.getName().toLowerCase().endsWith(".txt")) {
+	        file = new File(file.getParentFile(), file.getName() + ".txt");
+	      }
+	      try {
+	        textArea.write(new OutputStreamWriter(new FileOutputStream(file),
+	            "utf-8"));
+	        Desktop.getDesktop().open(file);
+	      } catch (Exception e) {
+	        e.printStackTrace();
+	      }
 	    }
 	}
 	
-	
+	void initUI() {
+	    JFrame frame = new JFrame(Interface.class.getSimpleName());
+	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    textArea = new JTextArea(24, 80);
+	    save = new JButton("Save to file");
+	    save.addActionListener(e -> saveToFile());
+	    frame.add(new JScrollPane(textArea));
+	    JPanel buttonPanel = new JPanel();
+	    buttonPanel.add(save);
+	    frame.add(buttonPanel, BorderLayout.SOUTH);
+	    frame.setSize(500, 400);
+	    frame.setVisible(true);
+	  }
+
+	private class fileCreater implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			new Interface(map).initUI();
+
+	    }
+	}
 	
 	private class fileChooser implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
@@ -180,6 +221,8 @@ public class Interface extends JFrame implements ActionListener {
 			if (usrSelec == JFileChooser.APPROVE_OPTION) {
 			    File fileToSave = saver.getSelectedFile();
 			    System.out.println("Enregistrer en tant que " + fileToSave.getAbsolutePath());
+			    
+			    
 			}
 			
 		}
@@ -191,7 +234,6 @@ public class Interface extends JFrame implements ActionListener {
 		
 	}
 	
-
 
 	
     
