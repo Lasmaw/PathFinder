@@ -7,7 +7,8 @@ import javax.swing.JButton;
 public class Case {
 	
 	//Attributs
-	int posX, posY, value;
+	int posX, posY;
+	public int value;
 	boolean clicked=false, start=false, finish=false;
 	Color color;
 	public JButton btn;

@@ -29,7 +29,7 @@ public class Interface extends JFrame implements ActionListener {
     
 	private static final long serialVersionUID = 1L;
 	
-	private JButton startBtn, quitBtn;
+	private JButton startBtn, openBtn, quitBtn;
 	private JPanel panelMenu, panelPath;
 	Carte map;
 	Path path;
@@ -60,38 +60,43 @@ public class Interface extends JFrame implements ActionListener {
         barreDeMenu.add(menuFichier);
 
         JMenuItem newCart = new JMenuItem("Nouvelle carte");
-        JMenuItem openCart = new JMenuItem("Ouvrir carte");
-        JMenuItem saveCart = new JMenuItem("Enregistrer carte");
+        JMenuItem openCart = new JMenuItem("Ouvrir une carte");
+        JMenuItem saveCart = new JMenuItem("Enregistrer la carte");
         menuFichier.add(newCart);
         menuFichier.add(openCart);
         menuFichier.add(saveCart);
         
         setJMenuBar(barreDeMenu);
 
-        newCart.addActionListener(new fileCreater());
+        newCart.addActionListener(new PathButtonListener());
         openCart.addActionListener(new fileChooser());
         saveCart.addActionListener(new fileSaver());
         
 //************** Boutons menu **************//
         
-        startBtn = new JButton("Jouer");
+        startBtn = new JButton("Nouvelle Carte");
+        openBtn = new JButton("Ouvrir une carte");
         quitBtn = new JButton("Quitter");
         
         startBtn.addActionListener(new StartButtonListener());
+        openBtn.addActionListener(new OpenButtonListener());
         quitBtn.addActionListener(new QuitButtonListener());
         
 //************** Boutons Path **************//
         
-        startBtn = new JButton("Jouer");
+        startBtn = new JButton("Nouvelle carte");
+        openBtn = new JButton("Ouvrir une carte");
         quitBtn = new JButton("Quitter");
         
         startBtn.addActionListener(new StartButtonListener());
+        openBtn.addActionListener(new OpenButtonListener());
         quitBtn.addActionListener(new QuitButtonListener());
         
 //************** Panels **************//
         
         panelMenu = new JPanel();
         panelMenu.add(startBtn);
+        panelMenu.add(openBtn);
         panelMenu.add(quitBtn);
         
         panelPath = new JPanel();
@@ -110,14 +115,16 @@ public class Interface extends JFrame implements ActionListener {
         win.setLayout(new GridLayout(size, size));
         win.setBorder(BorderFactory.createEmptyBorder(100, 350, 50, 350)); // north, west , south, east
 
+        
+        
         for (int i = 0; i < size; i++) {
         	for (int j = 0; j < size; j++) {
-        		JButton button = new JButton(String.valueOf(i+j));
+        		JButton button = new JButton(String.valueOf(map.map[i+2][j+2].value));
         		button.setPreferredSize(new Dimension(10,10));
         		if (i == 0 || i == size - 1 || j == 0 || j == size - 1) {
-        			button.addActionListener(new PathButtonListener());
         			button.setPreferredSize(new Dimension(buttonSize, buttonSize));
         		}
+    			button.addActionListener(new PathButtonListener());
         		map.map[i][j].btn=button;
         		win.add(map.map[i][j].btn);
         	}
@@ -134,7 +141,15 @@ public class Interface extends JFrame implements ActionListener {
 			getContentPane().remove(panelMenu);
 			getContentPane().add(panelPath);
 			getContentPane().validate();
-            System.out.println("Test");
+
+		}
+	}
+	
+	private class OpenButtonListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			getContentPane().remove(panelMenu);
+			getContentPane().add(panelPath);
+			getContentPane().validate();
 
 		}
 	}
@@ -148,6 +163,14 @@ public class Interface extends JFrame implements ActionListener {
 	private class PathButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			getContentPane().add(panelPath);
+			JFrame btnFrame = new JFrame("Case");
+			JPanel btnPanel = new JPanel();
+			JButton btnQuit = new JButton("Quitter");
+			btnFrame.dispose();
+		    btnFrame.add(btnQuit, BorderLayout.SOUTH);
+
+			btnFrame.setSize(300,400);
+			btnFrame.setVisible(true);
 			getContentPane().validate();
 		}
 	}
@@ -182,11 +205,10 @@ public class Interface extends JFrame implements ActionListener {
 	
 	void initUI() {
 	    JFrame frame = new JFrame(Interface.class.getSimpleName());
-	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	    textArea = new JTextArea(24, 80);
 	    save = new JButton("Save to file");
 	    save.addActionListener(e -> saveToFile());
-	    frame.add(new JScrollPane(textArea));
 	    JPanel buttonPanel = new JPanel();
 	    buttonPanel.add(save);
 	    frame.add(buttonPanel, BorderLayout.SOUTH);
@@ -196,7 +218,7 @@ public class Interface extends JFrame implements ActionListener {
 
 	private class fileCreater implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-			new Interface(map).initUI();
+			initUI();
 
 	    }
 	}
