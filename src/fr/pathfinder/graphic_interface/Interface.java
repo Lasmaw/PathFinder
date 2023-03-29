@@ -9,18 +9,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.OutputStreamWriter;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import fr.pathfinder.carte.Carte;
@@ -121,11 +122,15 @@ public class Interface extends JFrame implements ActionListener {
         	for (int j = 0; j < size; j++) {
         		JButton button = new JButton(String.valueOf(map.map[i+2][j+2].value));
         		button.setPreferredSize(new Dimension(10,10));
+        		button.setBackground(Color.white);
         		if (i == 0 || i == size - 1 || j == 0 || j == size - 1) {
         			button.setPreferredSize(new Dimension(buttonSize, buttonSize));
         		}
     			button.addActionListener(new PathButtonListener());
+    			
+    			
         		map.map[i][j].btn=button;
+        		map.map[i][j].btn.setBackground(map.map[i][j].color);
         		win.add(map.map[i][j].btn);
         	}
         }        
@@ -166,11 +171,32 @@ public class Interface extends JFrame implements ActionListener {
 			JFrame btnFrame = new JFrame("Case");
 			JPanel btnPanel = new JPanel();
 			JButton btnQuit = new JButton("Quitter");
-			btnFrame.dispose();
-		    btnFrame.add(btnQuit, BorderLayout.SOUTH);
+			JLabel valueLabel = new JLabel("Valeur :");
+			JLabel startLabel = new JLabel("Départ :");
+			JLabel finishLabel = new JLabel("Arrivée :");
 
+			JCheckBox chkStart = new JCheckBox("");
+			JCheckBox chkEnd = new JCheckBox("");
+
+			JFormattedTextField value = new JFormattedTextField();
+
+			btnQuit.addActionListener((ActionListener) new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					btnFrame.dispose();
+				}
+			});
+			
+			btnPanel.add(valueLabel);
+			btnPanel.add(value);
+			btnPanel.add(startLabel);
+			btnPanel.add(chkStart);
+			btnPanel.add(finishLabel);
+			btnPanel.add(chkEnd);
+			btnFrame.add(btnQuit, BorderLayout.SOUTH);
+			btnFrame.add(btnPanel);
 			btnFrame.setSize(300,400);
 			btnFrame.setVisible(true);
+			btnFrame.setResizable(false);
 			getContentPane().validate();
 		}
 	}
