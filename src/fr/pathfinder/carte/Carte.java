@@ -48,7 +48,7 @@ public class Carte {
 		this.map=new Case[size][size];
 		for(i=0;i<size;i++) {
 			for(j=0;j<size;j++) {
-				this.map[i][j]=new Case(i,j,0);
+				this.map[i][j]=new Case(i,j,15);
 			}
 		}
 		fillBorder(size);

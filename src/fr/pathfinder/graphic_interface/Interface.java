@@ -130,6 +130,7 @@ public class Interface extends JFrame implements ActionListener {
     			
     			
         		map.map[i][j].btn=button;
+        		map.map[i][j].autoCol();
         		map.map[i][j].btn.setBackground(map.map[i][j].color);
         		win.add(map.map[i][j].btn);
         	}
@@ -179,7 +180,8 @@ public class Interface extends JFrame implements ActionListener {
 			JCheckBox chkEnd = new JCheckBox("");
 
 			JFormattedTextField value = new JFormattedTextField();
-
+			
+			btnQuit.setBackground(Color.red);
 			btnQuit.addActionListener((ActionListener) new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					btnFrame.dispose();
@@ -197,6 +199,7 @@ public class Interface extends JFrame implements ActionListener {
 			btnFrame.setSize(300,400);
 			btnFrame.setVisible(true);
 			btnFrame.setResizable(false);
+			
 			getContentPane().validate();
 		}
 	}

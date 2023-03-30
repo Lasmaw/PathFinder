@@ -10,7 +10,7 @@ public class Case {
 	int posX, posY;
 	public int value;
 	boolean clicked=false, start=false, finish=false;
-	public Color color=Color.white;
+	public Color color;
 	public JButton btn;
 	
 	//Méthodes
@@ -40,7 +40,7 @@ public class Case {
 		this.clicked=bool;
 	}
 	
-	void autoCol() {
+	public void autoCol() {
 		if(0<=this.value && this.value <5) this.color=Color.white;
 		else if(5<=this.value && this.value <10) this.color=Color.lightGray;
 		else if(10<=this.value && this.value <15) this.color=Color.GRAY;
@@ -50,6 +50,8 @@ public class Case {
 		
 		if(this.start=true) this.color=Color.green;
 		else if(this.finish=true) this.color=Color.red;
+		
+	
 	}
 	
 	
