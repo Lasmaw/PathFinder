@@ -48,8 +48,8 @@ public class Case {
 		else if(20 <=this.value ) this.color=Color.black;
 		else if(0 > this.value ) this.color=Color.blue;
 		
-		if(this.start=true) this.color=Color.green;
-		else if(this.finish=true) this.color=Color.red;
+		//if(this.start=true) this.color=Color.green;
+		//else if(this.finish=true) this.color=Color.red;
 	}
 	
 	

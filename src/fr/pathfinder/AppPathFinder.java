@@ -3,7 +3,7 @@ package fr.pathfinder;
 import javax.swing.SwingUtilities;
 
 import fr.pathfinder.carte.Carte;
-import fr.pathfinder.graphic_interface.Interface;
+import fr.pathfinder.graphic_interface.Menu;
 
 public class AppPathFinder {
 
@@ -13,7 +13,7 @@ public class AppPathFinder {
 		//Ouvrir l'interface
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new Interface(cart);
+                new Menu();
             }
         });
 		

@@ -22,11 +22,12 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.JTextArea;
 
 import fr.pathfinder.carte.Carte;
 
-public class Interface extends JFrame implements ActionListener {
+public class Menu extends JFrame implements ActionListener {
     
 	private static final long serialVersionUID = 1L;
 	
@@ -38,7 +39,7 @@ public class Interface extends JFrame implements ActionListener {
 	JTextArea textArea;
 	JButton save;
 	
-	public Interface(Carte map) {
+	public Menu() {
 		
 		
 		
@@ -83,16 +84,6 @@ public class Interface extends JFrame implements ActionListener {
         openBtn.addActionListener(new OpenButtonListener());
         quitBtn.addActionListener(new QuitButtonListener());
         
-//************** Boutons Path **************//
-        
-        startBtn = new JButton("Nouvelle carte");
-        openBtn = new JButton("Ouvrir une carte");
-        quitBtn = new JButton("Quitter");
-        
-        startBtn.addActionListener(new StartButtonListener());
-        openBtn.addActionListener(new OpenButtonListener());
-        quitBtn.addActionListener(new QuitButtonListener());
-        
 //************** Panels **************//
         
         panelMenu = new JPanel();
@@ -101,40 +92,9 @@ public class Interface extends JFrame implements ActionListener {
         panelMenu.add(quitBtn);
         
         panelPath = new JPanel();
-        pathWin(map, panelPath);
 
         
         getContentPane().add(panelMenu);
-    }
-	
-	
-	public void pathWin(Carte map, JPanel win) { //Tableau de boutons
-		
-        int size = map.size;
-        int buttonSize = (1280 - 2 * 20) / size;
-        
-        win.setLayout(new GridLayout(size, size));
-        win.setBorder(BorderFactory.createEmptyBorder(100, 350, 50, 350)); // north, west , south, east
-
-        
-        
-        for (int i = 0; i < size; i++) {
-        	for (int j = 0; j < size; j++) {
-        		JButton button = new JButton(String.valueOf(map.map[i+2][j+2].value));
-        		button.setPreferredSize(new Dimension(10,10));
-        		button.setBackground(Color.white);
-        		if (i == 0 || i == size - 1 || j == 0 || j == size - 1) {
-        			button.setPreferredSize(new Dimension(buttonSize, buttonSize));
-        		}
-    			button.addActionListener(new PathButtonListener());
-    			
-    			
-        		map.map[i][j].btn=button;
-        		map.map[i][j].btn.setBackground(map.map[i][j].color);
-        		win.add(map.map[i][j].btn);
-        	}
-        }        
-        win.setVisible(true);
     }
 	
 	
@@ -143,10 +103,8 @@ public class Interface extends JFrame implements ActionListener {
 	
 	private class StartButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			getContentPane().remove(panelMenu);
-			getContentPane().add(panelPath);
-			getContentPane().validate();
-
+			NewMapWin newMap = new NewMapWin(panelMenu);
+			dispose();
 		}
 	}
 	
@@ -180,6 +138,7 @@ public class Interface extends JFrame implements ActionListener {
 
 			JFormattedTextField value = new JFormattedTextField();
 
+			JSlider slider = new JSlider(0,30,0); 
 			btnQuit.addActionListener((ActionListener) new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					btnFrame.dispose();
@@ -187,19 +146,23 @@ public class Interface extends JFrame implements ActionListener {
 			});
 			
 			btnPanel.add(valueLabel);
-			btnPanel.add(value);
+			btnPanel.add(slider);
 			btnPanel.add(startLabel);
 			btnPanel.add(chkStart);
 			btnPanel.add(finishLabel);
 			btnPanel.add(chkEnd);
 			btnFrame.add(btnQuit, BorderLayout.SOUTH);
 			btnFrame.add(btnPanel);
-			btnFrame.setSize(300,400);
+			btnFrame.setSize(300,120);
 			btnFrame.setVisible(true);
 			btnFrame.setResizable(false);
 			getContentPane().validate();
 		}
 	}
+	
+	
+	
+	
 	
 	
 	
@@ -230,7 +193,7 @@ public class Interface extends JFrame implements ActionListener {
 	}
 	
 	void initUI() {
-	    JFrame frame = new JFrame(Interface.class.getSimpleName());
+	    JFrame frame = new JFrame(Menu.class.getSimpleName());
 	    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	    textArea = new JTextArea(24, 80);
 	    save = new JButton("Save to file");
@@ -253,7 +216,7 @@ public class Interface extends JFrame implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
 	        JFileChooser chooser = new JFileChooser();
 	        chooser.setVisible(true);
-	        int userSelec = chooser.showOpenDialog(Interface.this);
+	        int userSelec = chooser.showOpenDialog(Menu.this);
 	        File file = chooser.getSelectedFile();
 	    }
 	}
@@ -263,7 +226,7 @@ public class Interface extends JFrame implements ActionListener {
 			JFileChooser saver = new JFileChooser();
 			saver.setDialogTitle("Enregistrer le fichier");
 			saver.setVisible(true);
-			int usrSelec = saver.showSaveDialog(Interface.this);
+			int usrSelec = saver.showSaveDialog(Menu.this);
 			
 			
 			if (usrSelec == JFileChooser.APPROVE_OPTION) {
