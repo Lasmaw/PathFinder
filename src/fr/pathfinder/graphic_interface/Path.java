@@ -69,7 +69,6 @@ public class Path extends JFrame implements ActionListener{
 	        
 	        pathPanel = new JPanel();
 	        
-	        	      
 			
 			this.size=size;
 			this.map = new Carte(this.size);
@@ -79,21 +78,25 @@ public class Path extends JFrame implements ActionListener{
 			pathPanel.setLayout(new GridLayout(size, size));
 			pathPanel.setBorder(BorderFactory.createEmptyBorder(100, 350, 50, 350)); // north, west , south, east
 		    
-		    for (int i = 0; i < size; i++) {
-	        	for (int j = 0; j < size; j++) {
-	        		JButton button = new JButton(String.valueOf(this.map.map[i+2][j+2].value));
+		    for (int i = 0; i < map.size+1; i++) {
+	        	for (int j = 0; j < map.size+1; j++) {
+	        		if(this.map.map[i][j].value == -1) {} else {
+	        		JButton button = new JButton(String.valueOf(this.map.map[i][j].value));
 	        		button.setPreferredSize(new Dimension(10,10));
 	        		button.setBackground(this.map.map[i][j].color);
-	        		if (i == 0 || i == size - 1 || j == 0 || j == size - 1) {
+	        		if (i == 0 || i == map.size + 1 || j == 0 || j == map.size + 1) {
 	        			button.setPreferredSize(new Dimension(buttonSize, buttonSize));
 	        		}
+	        		final int x = i;
+	        		final int y = j;
 	        		button.addActionListener((ActionListener) new ActionListener() {
 	    				public void actionPerformed(ActionEvent e) {
-	    					//TODO
+	    					StateModificaterWin modifier =  new StateModificaterWin((map.map[x][y]));
 	    				}
 	    			});
 	        		map.map[i][j].btn=button;
 	        		pathPanel.add(map.map[i][j].btn);
+	        		}
 	        	}
 		    }
 		    

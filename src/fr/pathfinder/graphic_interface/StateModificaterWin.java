@@ -21,30 +21,28 @@ public class StateModificaterWin extends JFrame implements ChangeListener{
 
 	private static final long serialVersionUID = 7964617219132017366L;
 
-	
+	JFrame frame = new JFrame("Editer la case");
+	JPanel panel = new JPanel();
+	JButton btnValid = new JButton("Valider");
 	JSlider slider;
 	JLabel valueLabel;
 	
-	public StateModificaterWin(Case slot){
-		super("PathFinder");
-		modificater(slot);
-		
-		
-	}
+	JLabel startLabel = new JLabel("Départ :");
+	JLabel finishLabel = new JLabel("Arrivée :");
+
+	JCheckBox chkStart = new JCheckBox("");
+	JCheckBox chkEnd = new JCheckBox("");
+
+	JFormattedTextField value = new JFormattedTextField();
 	
-	public void modificater(Case slot) {
-		JFrame btnFrame = new JFrame("Case");
-		JPanel btnPanel = new JPanel();
+	Case slot;
+	
+	public StateModificaterWin(Case slot){
+		
+		this.slot=slot;
 		slider = new JSlider(0,20,slot.value);
 		valueLabel = new JLabel("Valeur : " + slider.getValue());
-		JButton btnQuit = new JButton("Quitter");
-		JLabel startLabel = new JLabel("Départ :");
-		JLabel finishLabel = new JLabel("Arrivée :");
 
-		JCheckBox chkStart = new JCheckBox("");
-		JCheckBox chkEnd = new JCheckBox("");
-
-		JFormattedTextField value = new JFormattedTextField();
 		
 		
 		slider.setPaintTrack(true); 
@@ -53,27 +51,33 @@ public class StateModificaterWin extends JFrame implements ChangeListener{
 		slider.setMajorTickSpacing(20);
 		slider.setMinorTickSpacing(5);
 		
-		btnQuit.addActionListener((ActionListener) new ActionListener() {
+		btnValid.addActionListener((ActionListener) new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnFrame.dispose();
+				slot.value=slider.getValue();
+				slot.autoCol();
+				slot.btn.setBackground(slot.color);
+				slot.btn.setText(String.valueOf(slot.value));
+				frame.dispose();
 			}
 		});
 		
-		btnPanel.add(slider);
-		btnPanel.add(valueLabel);
-		btnPanel.add(startLabel);
-		btnPanel.add(chkStart);
-		btnPanel.add(finishLabel);
-		btnPanel.add(chkEnd);
-		btnFrame.add(btnQuit, BorderLayout.SOUTH);
-		btnFrame.add(btnPanel);
-		btnFrame.setSize(300,150);
-		btnFrame.setVisible(true);
-		btnFrame.setResizable(false);
+		panel.add(slider);
+		panel.add(valueLabel);
+		panel.add(startLabel);
+		panel.add(chkStart);
+		panel.add(finishLabel);
+		panel.add(chkEnd);
+		frame.add(btnValid, BorderLayout.SOUTH);
+		frame.add(panel);
+		frame.setSize(300,150);
+		frame.setVisible(true);
+		frame.setResizable(false);
+		
+		getContentPane().validate();
 	}
 
 	public void stateChanged(ChangeEvent e) {
-		valueLabel.setText("Valeur : " + slider.getValue());
+		slot.value=slider.getValue();
 	}
 	
 	

@@ -27,7 +27,7 @@ public class NewMapWin extends JFrame implements ChangeListener{
        
 		
 		valueLabel = new JLabel();
-		slider = new JSlider(0,12,size);
+		slider = new JSlider(4,12,size);
 		
 		valueLabel.setText("Taille de la carte :");
 		

@@ -26,7 +26,7 @@ public class Carte {
 		int i,j;
 		for(i=0;i<size;i++) {
 			for(j=0;j<size;j++) {
-				if(i<2 || i>(size-3) || j<2 || j>(size-3)) editCaseValue(i,j,-1);
+				if(i<1 || i>(size-2) || j<1 || j>(size-2)) editCaseValue(i,j,-1);
 			}
 		}
 	}
@@ -43,15 +43,15 @@ public class Carte {
 	
 	public Carte(int size) {
 		this.size=size;
-		size=size+4;
+		size=size+2;
 		int i,j;
 		this.map=new Case[size][size];
 		for(i=0;i<size;i++) {
 			for(j=0;j<size;j++) {
-				this.map[i][j]=new Case(i,j,20);
+				this.map[i][j]=new Case(i,j,0);
 			}
 		}
 		fillBorder(size);
-		//showMap(size);
+		showMap(size);
 	}
 }
