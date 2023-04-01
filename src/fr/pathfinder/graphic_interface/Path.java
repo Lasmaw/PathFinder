@@ -15,6 +15,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import fr.pathfinder.carte.Carte;
+import fr.pathfinder.carte.Case;
 
 public class Path extends JFrame implements ActionListener{
 
@@ -81,32 +82,36 @@ public class Path extends JFrame implements ActionListener{
 		    for (int i = 0; i < map.size+1; i++) {
 	        	for (int j = 0; j < map.size+1; j++) {
 	        		if(this.map.map[i][j].value == -1) {} else {
-	        		JButton button = new JButton(String.valueOf(this.map.map[i][j].value));
-	        		button.setPreferredSize(new Dimension(10,10));
-	        		button.setBackground(this.map.map[i][j].color);
-	        		if (i == 0 || i == map.size + 1 || j == 0 || j == map.size + 1) {
-	        			button.setPreferredSize(new Dimension(buttonSize, buttonSize));
-	        		}
-	        		final int x = i;
-	        		final int y = j;
-	        		button.addActionListener((ActionListener) new ActionListener() {
-	    				public void actionPerformed(ActionEvent e) {
-	    					StateModificaterWin modifier =  new StateModificaterWin((map.map[x][y]));
-	    				}
-	    			});
-	        		map.map[i][j].btn=button;
-	        		pathPanel.add(map.map[i][j].btn);
+	        			JButton button = new JButton(String.valueOf(this.map.map[i][j].value));
+	        			button.setPreferredSize(new Dimension(10,10));
+	        			button.setBackground(this.map.map[i][j].color);
+	        			if (i == 0 || i == map.size + 1 || j == 0 || j == map.size + 1) {
+	        				button.setPreferredSize(new Dimension(buttonSize, buttonSize));
+	        			}
+	        			final int x = i;
+	        			final int y = j;
+	        			button.addActionListener((ActionListener) new ActionListener() {
+	        				public void actionPerformed(ActionEvent e) {
+	        					StateModificaterWin modifier =  new StateModificaterWin((map.map[x][y]));
+	        					
+	        				}
+	        			});
+	        		
+	        			map.map[i][j].btn=button;
+	        			pathPanel.add(map.map[i][j].btn);
+	        			
+	        			
 	        		}
 	        	}
 		    }
 		    
-		    
+
 		    add(pathPanel);
 	        getContentPane().add(pathPanel);
 			pathPanel.setVisible(true);
 		}
 
-
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub

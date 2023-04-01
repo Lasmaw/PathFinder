@@ -24,52 +24,61 @@ public class StateModificaterWin extends JFrame implements ChangeListener{
 	JFrame frame = new JFrame("Editer la case");
 	JPanel panel = new JPanel();
 	JButton btnValid = new JButton("Valider");
-	JSlider slider;
+	JSlider slider,switcher;
 	JLabel valueLabel;
 	
-	JLabel startLabel = new JLabel("Départ :");
-	JLabel finishLabel = new JLabel("Arrivée :");
+	JLabel startLabel = new JLabel("Départ             Neutre           Arrivée");
 
-	JCheckBox chkStart = new JCheckBox("");
-	JCheckBox chkEnd = new JCheckBox("");
 
 	JFormattedTextField value = new JFormattedTextField();
 	
 	Case slot;
+	int slotCase;
+	
 	
 	public StateModificaterWin(Case slot){
 		
 		this.slot=slot;
-		slider = new JSlider(0,20,slot.value);
-		valueLabel = new JLabel("Valeur : " + slider.getValue());
+
+		slider = new JSlider(0,25,slot.value);
+		switcher = new JSlider(-1,1,slot.state);
+		valueLabel = new JLabel("Valeur     :     " + slider.getValue());
 
 		
 		
 		slider.setPaintTrack(true); 
         slider.setPaintTicks(true); 
         slider.setPaintLabels(true); 
-		slider.setMajorTickSpacing(20);
-		slider.setMinorTickSpacing(5);
+		slider.setMajorTickSpacing(5);
+		slider.setMinorTickSpacing(1);
+		
+		switcher.setPaintTrack(true); 
+		switcher.setPaintTicks(true); 
+		switcher.setPaintLabels(true); 
+		switcher.setMajorTickSpacing(1);
+
 		
 		btnValid.addActionListener((ActionListener) new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				slot.value=slider.getValue();
+				slot.state=switcher.getValue();
 				slot.autoCol();
 				slot.btn.setBackground(slot.color);
-				slot.btn.setText(String.valueOf(slot.value));
+
+				
 				frame.dispose();
 			}
 		});
-		
-		panel.add(slider);
 		panel.add(valueLabel);
+		panel.add(slider);
+		
+		panel.add(switcher);
 		panel.add(startLabel);
-		panel.add(chkStart);
-		panel.add(finishLabel);
-		panel.add(chkEnd);
+
+
 		frame.add(btnValid, BorderLayout.SOUTH);
 		frame.add(panel);
-		frame.setSize(300,150);
+		frame.setSize(300,210);
 		frame.setVisible(true);
 		frame.setResizable(false);
 		
@@ -78,7 +87,12 @@ public class StateModificaterWin extends JFrame implements ChangeListener{
 
 	public void stateChanged(ChangeEvent e) {
 		slot.value=slider.getValue();
+		slot.state=switcher.getValue();
+		valueLabel = new JLabel("Valeur : " + slider.getValue()); 
+
 	}
+	
+	
 	
 	
 

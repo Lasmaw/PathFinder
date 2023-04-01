@@ -70,7 +70,7 @@ public class Menu extends JFrame implements ActionListener {
         
         setJMenuBar(barreDeMenu);
 
-        newCart.addActionListener(new PathButtonListener());
+        newCart.addActionListener(new StartButtonListener());
         openCart.addActionListener(new fileChooser());
         saveCart.addActionListener(new fileSaver());
         
@@ -122,52 +122,7 @@ public class Menu extends JFrame implements ActionListener {
 			dispose();
 		}
 	}
-    
-	private class PathButtonListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			getContentPane().add(panelPath);
-			JFrame btnFrame = new JFrame("Case");
-			JPanel btnPanel = new JPanel();
-			JButton btnQuit = new JButton("Quitter");
-			JLabel valueLabel = new JLabel("Valeur :");
-			JLabel startLabel = new JLabel("Départ :");
-			JLabel finishLabel = new JLabel("Arrivée :");
-
-			JCheckBox chkStart = new JCheckBox("");
-			JCheckBox chkEnd = new JCheckBox("");
-
-			JFormattedTextField value = new JFormattedTextField();
-
-			JSlider slider = new JSlider(0,30,0); 
-			btnQuit.addActionListener((ActionListener) new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					btnFrame.dispose();
-				}
-			});
-			
-			btnPanel.add(valueLabel);
-			btnPanel.add(slider);
-			btnPanel.add(startLabel);
-			btnPanel.add(chkStart);
-			btnPanel.add(finishLabel);
-			btnPanel.add(chkEnd);
-			btnFrame.add(btnQuit, BorderLayout.SOUTH);
-			btnFrame.add(btnPanel);
-			btnFrame.setSize(300,120);
-			btnFrame.setVisible(true);
-			btnFrame.setResizable(false);
-			getContentPane().validate();
-		}
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-    
+       
     
 //************** Fenêtre modif **************//
 	

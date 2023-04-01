@@ -4,7 +4,7 @@ import java.awt.Color;
 
 public class Carte {
 	
-	public Case[][] map;
+	public Case[][] map, start, finish;
 	public int size;
 	String name;
 	
@@ -40,6 +40,7 @@ public class Carte {
 			System.out.print("\n");
 		}
 	}
+	
 	
 	public Carte(int size) {
 		this.size=size;
