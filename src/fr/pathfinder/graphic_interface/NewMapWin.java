@@ -48,6 +48,7 @@ public class NewMapWin extends JFrame implements ChangeListener{
 		
 		frame.pack();
 		frame.setSize(300,150);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		frame.setResizable(false);
 		frame.add(panel);

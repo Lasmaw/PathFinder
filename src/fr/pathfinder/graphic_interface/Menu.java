@@ -1,31 +1,26 @@
 package fr.pathfinder.graphic_interface;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Desktop;
-import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
 import javax.swing.JTextArea;
 
 import fr.pathfinder.carte.Carte;
+
 
 public class Menu extends JFrame implements ActionListener {
     
@@ -38,8 +33,8 @@ public class Menu extends JFrame implements ActionListener {
 	
 	JTextArea textArea;
 	JButton save;
-	
-	public Menu() {
+
+	public Menu()  {
 		
 		
 		
@@ -50,6 +45,7 @@ public class Menu extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setSize(1280,720);
+        setLocationRelativeTo(null);
         setVisible(true); 
         setResizable(false);
         
@@ -85,7 +81,7 @@ public class Menu extends JFrame implements ActionListener {
         quitBtn.addActionListener(new QuitButtonListener());
         
 //************** Panels **************//
-        
+
         panelMenu = new JPanel();
         panelMenu.add(startBtn);
         panelMenu.add(openBtn);
@@ -95,6 +91,7 @@ public class Menu extends JFrame implements ActionListener {
 
         
         getContentPane().add(panelMenu);
+
     }
 	
 	

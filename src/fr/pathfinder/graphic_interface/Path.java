@@ -38,6 +38,7 @@ public class Path extends JFrame implements ActionListener{
 	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        pack();
 	        setSize(1280,720);
+	        setLocationRelativeTo(null);
 	        setVisible(true); 
 	        setResizable(false);
 
@@ -92,7 +93,7 @@ public class Path extends JFrame implements ActionListener{
 	        			final int y = j;
 	        			button.addActionListener((ActionListener) new ActionListener() {
 	        				public void actionPerformed(ActionEvent e) {
-	        					StateModificaterWin modifier =  new StateModificaterWin((map.map[x][y]));
+	        					StateModificaterWin modifier =  new StateModificaterWin(map, map.map[x][y]);
 	        					
 	        				}
 	        			});

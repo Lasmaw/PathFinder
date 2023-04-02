@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -14,6 +13,7 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import fr.pathfinder.carte.Carte;
 import fr.pathfinder.carte.Case;
 
 
@@ -33,13 +33,16 @@ public class StateModificaterWin extends JFrame implements ChangeListener{
 	JFormattedTextField value = new JFormattedTextField();
 	
 	Case slot;
+	Carte carte;
 	int slotCase;
+	int currentState;
 	
 	
-	public StateModificaterWin(Case slot){
+	public StateModificaterWin(Carte usedMap, Case slotCarte){
+		this.carte=usedMap;
+		this.slot=slotCarte;
+		this.currentState=slotCarte.state;
 		
-		this.slot=slot;
-
 		slider = new JSlider(0,25,slot.value);
 		switcher = new JSlider(-1,1,slot.state);
 		valueLabel = new JLabel("Valeur     :     " + slider.getValue());
@@ -60,11 +63,55 @@ public class StateModificaterWin extends JFrame implements ChangeListener{
 		
 		btnValid.addActionListener((ActionListener) new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				slot.value=slider.getValue();
-				slot.state=switcher.getValue();
-				slot.autoCol();
-				slot.btn.setBackground(slot.color);
+				
+				switch(switcher.getValue()) {
+				case -1:
+					usedMap.strtCount++;
+					if(usedMap.strtCount>0) {
+						usedMap.strtCount=0;
+						for(int i=0;i<usedMap.size;i++) {
+							for(int j=0;j<usedMap.size;j++) {
+								if(usedMap.map[i][j].state==-1) {
+									usedMap.map[i][j].state=0;
+									usedMap.map[i][j].autoCol();
+									usedMap.map[i][j].btn.setBackground(usedMap.map[i][j].color);
+								}
+								
+							}
+						}
+					}
+					usedMap.start=slotCarte;
+					break;
+				case 0:
+					break;
+				case 1:
+					usedMap.fnshCount++;
+					if(usedMap.fnshCount>0) {
+						usedMap.fnshCount=0;
+						for(int i=0;i<usedMap.size;i++) {
+							for(int j=0;j<usedMap.size;j++) {
+								if(usedMap.map[i][j].state==1) {
+									usedMap.map[i][j].state=0;
+									usedMap.map[i][j].autoCol();
+									usedMap.map[i][j].btn.setBackground(usedMap.map[i][j].color);
+								}
+								
+							}
+						}
+					}
+					usedMap.finish=slotCarte;
+					break;
+				default:
+					break;
+				}
+				
+				slotCarte.value=slider.getValue();
+				slotCarte.state=switcher.getValue();
 
+				slotCarte.autoCol();
+				slotCarte.btn.setBackground(slotCarte.color);
+				
+				
 				
 				frame.dispose();
 			}
@@ -79,6 +126,7 @@ public class StateModificaterWin extends JFrame implements ChangeListener{
 		frame.add(btnValid, BorderLayout.SOUTH);
 		frame.add(panel);
 		frame.setSize(300,210);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		frame.setResizable(false);
 		

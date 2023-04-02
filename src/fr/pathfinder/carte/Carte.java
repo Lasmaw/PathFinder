@@ -4,8 +4,9 @@ import java.awt.Color;
 
 public class Carte {
 	
-	public Case[][] map, start, finish;
-	public int size;
+	public Case[][] map;
+	public Case start, finish;
+	public int size,strtCount=0,fnshCount=0;
 	String name;
 	
 	//Méthodes

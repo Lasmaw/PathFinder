@@ -4,6 +4,8 @@ import java.awt.Color;
 
 import javax.swing.JButton;
 
+import fr.pathfinder.graphic_interface.ColorBoard;
+
 public class Case {
 	
 	//Attributs
@@ -43,37 +45,21 @@ public class Case {
 				
 		switch(this.state) {
 		case -1: 
-			this.color=Color.GREEN;
+			this.color=Color.white;
 			this.btn.setText("D");
 			this.btn.setForeground(Color.black);
 			break;
 		case 1: 
-			this.color=Color.RED;
+			this.color=Color.black;
 			this.btn.setText("A");
-			this.btn.setForeground(Color.black);
+			this.btn.setForeground(Color.white);
 			break;
 		case 0:
-			if(0<=this.value && this.value <5) {
-				this.color=Color.white;
-				this.btn.setForeground(Color.black);
+			ColorBoard colorBoard = new ColorBoard();
+			for(int i=0;i<=this.value;i++) {
+				this.color=colorBoard.colorBoard[i];
+				this.btn.setForeground(colorBoard.colorFont[i]);
 			}
-			else if(5<=this.value && this.value <10) {
-				this.color=Color.lightGray;
-				this.btn.setForeground(Color.black);
-			}
-			else if(10<=this.value && this.value <15) {
-				this.color=Color.GRAY;
-				this.btn.setForeground(Color.black);
-			}
-			else if(15<=this.value && this.value <20) {
-				this.color=Color.darkGray;
-				this.btn.setForeground(Color.white);
-			}
-			else if(20 <=this.value ) {
-				this.color=Color.black;
-				this.btn.setForeground(Color.white);
-			}
-			else if(0 > this.value ) this.color=Color.blue;
 			this.btn.setText(String.valueOf(this.value));
 			break;
 		default:
