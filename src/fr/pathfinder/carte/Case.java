@@ -46,11 +46,13 @@ public class Case {
 		switch(this.state) {
 		case -1: 
 			this.color=Color.white;
+			this.btn.setBackground(this.color);
 			this.btn.setText("D");
 			this.btn.setForeground(Color.black);
 			break;
 		case 1: 
 			this.color=Color.black;
+			this.btn.setBackground(this.color);
 			this.btn.setText("A");
 			this.btn.setForeground(Color.white);
 			break;
@@ -60,6 +62,7 @@ public class Case {
 				this.color=colorBoard.colorBoard[i];
 				this.btn.setForeground(colorBoard.colorFont[i]);
 			}
+			this.btn.setBackground(this.color);
 			this.btn.setText(String.valueOf(this.value));
 			break;
 		default:

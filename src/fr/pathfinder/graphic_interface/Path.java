@@ -120,6 +120,7 @@ public class Path extends JFrame implements ActionListener{
 		    
 
 		    add(pathPanel);
+		    
 	        getContentPane().add(pathPanel);
 			pathPanel.setVisible(true);
 		}
@@ -131,7 +132,7 @@ public class Path extends JFrame implements ActionListener{
 					backTracker = new BackTracker(map.toBackTrackMap());
 					backTracker.resolve(new Position(map.start.posX,map.start.posY) , new Position(map.finish.posX,map.finish.posY));
 					for (Pair pair : backTracker.getStack().dataStack) {
-						map.map[pair.position.x][pair.position.y].btn.setBackground(Color.pink);
+						map.map[pair.position.x][pair.position.y].btn.setBackground(new Color(255,102,255));
 						map.map[pair.position.x][pair.position.y].btn.setText("P");
 						
 					}
@@ -146,7 +147,7 @@ public class Path extends JFrame implements ActionListener{
 		
 		private class Randomize implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
-				map.randomize(5);
+				map.randomize(6);
 				backTracker=new BackTracker(map.toBackTrackMap());
 				
 			}
