@@ -1,5 +1,6 @@
 package fr.pathfinder.graphic_interface;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -8,14 +9,13 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import fr.pathfinder.carte.Carte;
-import fr.pathfinder.carte.Case;
+import fr.pathfinder.carte.CellMap;
+import fr.pathfinder.backtrack.*;
 
 public class Path extends JFrame implements ActionListener{
 
@@ -23,10 +23,12 @@ public class Path extends JFrame implements ActionListener{
 
 	int size;
 	
-	Carte map;
+	private BackTracker backTracker = null;
+	
+	CellMap map;
 	
 	JPanel pathPanel;
-	private JButton testbtn;
+	
 	
 		
 		Path(int size){
@@ -48,18 +50,28 @@ public class Path extends JFrame implements ActionListener{
 	        JMenuBar barreDeMenu = new JMenuBar();
 	        
 	        JMenu menuFichier = new JMenu("Fichier");
+	        JMenu menuCalculs = new JMenu("Calculs");
 	        barreDeMenu.add(menuFichier);
+	        barreDeMenu.add(menuCalculs);
 
 	        JMenuItem newCart = new JMenuItem("Nouvelle carte");
 	        JMenuItem openCart = new JMenuItem("Ouvrir une carte");
 	        JMenuItem saveCart = new JMenuItem("Enregistrer la carte");
+	        
+	        JMenuItem startCalculator = new JMenuItem("Lancer le calcul");
+	        JMenuItem randomizer = new JMenuItem("Remplir les cases aléatoirement");
 	        menuFichier.add(newCart);
 	        menuFichier.add(openCart);
 	        menuFichier.add(saveCart);
 	        
+	        menuCalculs.add(startCalculator);
+	        menuCalculs.add(randomizer);
+	        
 	        setJMenuBar(barreDeMenu);
 
-//	        newCart.addActionListener(new PathButtonListener());
+	        startCalculator.addActionListener(new BackTrackerStarter());
+	        randomizer.addActionListener(new Randomize());
+//	        newCart.addActionListener(new NewMapWin(pathPanel));
 //	        openCart.addActionListener(new fileChooser());
 //	        saveCart.addActionListener(new fileSaver());
 			
@@ -69,20 +81,21 @@ public class Path extends JFrame implements ActionListener{
 	        getContentPane().add(pathPanel);
 	      //************** Panels **************//
 	        
-	        pathPanel = new JPanel();
+	        
 	        
 			
 			this.size=size;
-			this.map = new Carte(this.size);
+			this.map = new CellMap(this.size);
+			this.backTracker = new BackTracker(this.map.toBackTrackMap());
 			
 			
 			int buttonSize=(1280 - 2 * 20) / size;
 			pathPanel.setLayout(new GridLayout(size, size));
 			pathPanel.setBorder(BorderFactory.createEmptyBorder(100, 350, 50, 350)); // north, west , south, east
 		    
-		    for (int i = 0; i < map.size+1; i++) {
-	        	for (int j = 0; j < map.size+1; j++) {
-	        		if(this.map.map[i][j].value == -1) {} else {
+		    for (int i = 0; i < map.size; i++) {
+	        	for (int j = 0; j < map.size; j++) {
+
 	        			JButton button = new JButton(String.valueOf(this.map.map[i][j].value));
 	        			button.setPreferredSize(new Dimension(10,10));
 	        			button.setBackground(this.map.map[i][j].color);
@@ -101,8 +114,7 @@ public class Path extends JFrame implements ActionListener{
 	        			map.map[i][j].btn=button;
 	        			pathPanel.add(map.map[i][j].btn);
 	        			
-	        			
-	        		}
+	        		
 	        	}
 		    }
 		    
@@ -112,6 +124,33 @@ public class Path extends JFrame implements ActionListener{
 			pathPanel.setVisible(true);
 		}
 
+		
+		private class BackTrackerStarter implements ActionListener {
+			public void actionPerformed(ActionEvent event) {
+				try {
+					backTracker = new BackTracker(map.toBackTrackMap());
+					backTracker.resolve(new Position(map.start.posX,map.start.posY) , new Position(map.finish.posX,map.finish.posY));
+					for (Pair pair : backTracker.getStack().dataStack) {
+						map.map[pair.position.x][pair.position.y].btn.setBackground(Color.pink);
+						map.map[pair.position.x][pair.position.y].btn.setText("P");
+						
+					}
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+		    }
+		}
+		
+		private class Randomize implements ActionListener {
+			public void actionPerformed(ActionEvent e) {
+				map.randomize(5);
+				backTracker=new BackTracker(map.toBackTrackMap());
+				
+			}
+		}
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {

@@ -19,7 +19,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import fr.pathfinder.carte.Carte;
+import fr.pathfinder.carte.CellMap;
 
 
 public class Menu extends JFrame implements ActionListener {
@@ -28,7 +28,7 @@ public class Menu extends JFrame implements ActionListener {
 	
 	private JButton startBtn, openBtn, quitBtn;
 	private JPanel panelMenu, panelPath;
-	Carte map;
+	CellMap map;
 	Path path;
 	
 	JTextArea textArea;

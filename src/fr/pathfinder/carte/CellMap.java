@@ -1,8 +1,13 @@
 package fr.pathfinder.carte;
 
 import java.awt.Color;
+import java.util.Random;
 
-public class Carte {
+
+import fr.pathfinder.backtrack.Position;
+import fr.pathfinder.backtrack.Map;
+
+public class CellMap {
 	
 	public Case[][] map;
 	public Case start, finish;
@@ -43,9 +48,8 @@ public class Carte {
 	}
 	
 	
-	public Carte(int size) {
+	public CellMap(int size) {
 		this.size=size;
-		size=size+2;
 		int i,j;
 		this.map=new Case[size][size];
 		for(i=0;i<size;i++) {
@@ -53,7 +57,37 @@ public class Carte {
 				this.map[i][j]=new Case(i,j,0);
 			}
 		}
-		fillBorder(size);
 		showMap(size);
 	}
+	
+	public Map toBackTrackMap() {
+		Map bMap = new Map(map.length, map.length);
+		for (int i = 0; i < this.map.length; i++) {
+            for (int j = 0; j < this.map[0].length; j++) {
+                bMap.set(i,j,map[i][j].value);
+            }
+        }
+		return bMap;
+	}
+	
+	
+	public CellMap randomize(int max_height) {
+        Random random = new Random();
+        for (int i = 0; i < this.size; i++) {
+            for (int j = 0; j < this.size; j++) {
+                map[i][j].value = random.nextInt(max_height);
+                map[i][j].btn.setText(String.valueOf(map[i][j].value)); 
+                map[i][j].autoCol();
+            }
+        }
+        return this;
+    }
+	
+	public void set(Position position, int value) {
+        editCaseValue(position.x, position.y, value);
+    }
+	
+	public int getHeightDelta(Position origin, Position destination) {
+        return map[destination.x][destination.y].value- map[origin.x][origin.y].value;
+    }
 }

@@ -13,8 +13,8 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import fr.pathfinder.carte.Carte;
 import fr.pathfinder.carte.Case;
+import fr.pathfinder.carte.CellMap;
 
 
 public class StateModificaterWin extends JFrame implements ChangeListener{
@@ -33,12 +33,12 @@ public class StateModificaterWin extends JFrame implements ChangeListener{
 	JFormattedTextField value = new JFormattedTextField();
 	
 	Case slot;
-	Carte carte;
+	CellMap carte;
 	int slotCase;
 	int currentState;
 	
 	
-	public StateModificaterWin(Carte usedMap, Case slotCarte){
+	public StateModificaterWin(CellMap usedMap, Case slotCarte){
 		this.carte=usedMap;
 		this.slot=slotCarte;
 		this.currentState=slotCarte.state;
