@@ -1,5 +1,4 @@
 package fr.pathfinder.backtrack;
-
 import java.util.Random;
 
 /**

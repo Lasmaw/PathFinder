@@ -77,8 +77,8 @@ public class BackTracker {
         }
 
         Position nextPosition = getNextPos(cursor);
-        if (nextPosition.x < 1 || nextPosition.y < 0
-                || nextPosition.x >= map.width || nextPosition.y >= map.height // Check bounds
+        if (nextPosition.x < 0 || nextPosition.y < 0
+                || nextPosition.x >= map.height || nextPosition.y >= map.width // Check bounds
                 || map.getHeightDelta(cursor.position, nextPosition) > 3
                 || stack.checkIfKnownCell(nextPosition))
         {

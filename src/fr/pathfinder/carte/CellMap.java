@@ -57,7 +57,7 @@ public class CellMap {
 				this.map[i][j]=new Case(i,j,0);
 			}
 		}
-		showMap(size);
+		//showMap(size);
 	}
 	
 	public Map toBackTrackMap() {

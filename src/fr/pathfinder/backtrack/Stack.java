@@ -1,5 +1,4 @@
 package fr.pathfinder.backtrack;
-
 import java.util.ArrayList;
 
 /**
@@ -7,7 +6,7 @@ import java.util.ArrayList;
  * @author Safenein
  */
 public class Stack {
-    final public ArrayList<Pair> dataStack = new ArrayList<>();
+    public final ArrayList<Pair> dataStack = new ArrayList<>();
 
     /**
      * Push onto the stack direction and nextPosition

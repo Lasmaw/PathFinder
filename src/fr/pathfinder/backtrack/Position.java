@@ -1,5 +1,4 @@
 package fr.pathfinder.backtrack;
-
 /**
  * @author Safenein
  */
