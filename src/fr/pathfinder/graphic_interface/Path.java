@@ -14,8 +14,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import fr.MapParser.MapParser;
+import fr.MapSaver.MapSaver;
+import fr.backtrack.BackTracker;
+import fr.backtrack.Pair;
+import fr.backtrack.Position;
 import fr.pathfinder.carte.CellMap;
-import fr.pathfinder.backtrack.*;
 
 public class Path extends JFrame implements ActionListener{
 
@@ -31,11 +35,14 @@ public class Path extends JFrame implements ActionListener{
 	
 	
 		
-		Path(int size){
-
+		Path(int size, CellMap mapInput){
+			
+			
 			//************** Données de la fenêtre **************//
 			
 	        super("PathFinder");
+	        
+	        
 	        
 	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        pack();
@@ -54,13 +61,12 @@ public class Path extends JFrame implements ActionListener{
 	        barreDeMenu.add(menuFichier);
 	        barreDeMenu.add(menuCalculs);
 
-	        JMenuItem newCart = new JMenuItem("Nouvelle carte");
 	        JMenuItem openCart = new JMenuItem("Ouvrir une carte");
 	        JMenuItem saveCart = new JMenuItem("Enregistrer la carte");
 	        
 	        JMenuItem startCalculator = new JMenuItem("Lancer le calcul");
 	        JMenuItem randomizer = new JMenuItem("Remplir les cases aléatoirement");
-	        menuFichier.add(newCart);
+
 	        menuFichier.add(openCart);
 	        menuFichier.add(saveCart);
 	        
@@ -71,9 +77,9 @@ public class Path extends JFrame implements ActionListener{
 
 	        startCalculator.addActionListener(new BackTrackerStarter());
 	        randomizer.addActionListener(new Randomize());
-//	        newCart.addActionListener(new NewMapWin(pathPanel));
-//	        openCart.addActionListener(new fileChooser());
-//	        saveCart.addActionListener(new fileSaver());
+	       
+	        openCart.addActionListener(new fileChooser());
+	        saveCart.addActionListener(new fileSaver());
 			
 	        
 	        pathPanel = new JPanel();
@@ -82,10 +88,11 @@ public class Path extends JFrame implements ActionListener{
 	      //************** Panels **************//
 	        
 	        
-	        
+	        this.map=mapInput;
 			
 			this.size=size;
-			this.map = new CellMap(this.size);
+			if(this.map==null) this.map = new CellMap(this.size);
+			
 			this.backTracker = new BackTracker(this.map.toBackTrackMap());
 			
 			
@@ -124,7 +131,8 @@ public class Path extends JFrame implements ActionListener{
 	        getContentPane().add(pathPanel);
 			pathPanel.setVisible(true);
 		}
-
+		
+		
 		
 		private class BackTrackerStarter implements ActionListener {
 			public void actionPerformed(ActionEvent event) {
@@ -147,11 +155,42 @@ public class Path extends JFrame implements ActionListener{
 		
 		private class Randomize implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
-				map.randomize(6);
+				map.randomize(map.size+1);
 				backTracker=new BackTracker(map.toBackTrackMap());
 				
 			}
 		}
+		
+		private class fileChooser implements ActionListener{
+			public void actionPerformed(ActionEvent e) {
+				try {
+						MapParser mapParser = new MapParser();
+						int [][] mapToParse=mapParser.parse();
+						map=new CellMap(mapToParse);
+						dispose();
+						new Path(mapToParse.length, map);
+		
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		}
+		
+		
+		private class fileSaver implements ActionListener{
+			public void actionPerformed(ActionEvent e) {
+				try {
+						MapSaver mapSaver = new MapSaver(Path.this.map.toBackTrackMap().heightMap);
+						mapSaver.save();
+		
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		}
+		
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {

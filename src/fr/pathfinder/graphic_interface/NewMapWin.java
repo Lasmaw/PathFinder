@@ -41,7 +41,7 @@ public class NewMapWin extends JFrame implements ChangeListener{
 			public void actionPerformed(ActionEvent e) {
 				size=slider.getValue();
 				frame.dispose();
-				Path path = new Path(size);
+				Path path = new Path(size,null);
 				getContentPane().remove(panelMenu);
 			}
 		});

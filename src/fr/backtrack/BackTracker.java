@@ -1,4 +1,4 @@
-package fr.pathfinder.backtrack;
+package fr.backtrack;
 
 /**
  * BackTracker is an object that take a map in input and output the best path from one point to another
@@ -73,6 +73,8 @@ public class BackTracker {
         if (cursor.direction == Direction.END) {
             Pair nextCursor = stack.pop(); // Delete last value in stack and return the new last value
             nextCursor.direction = Direction.values()[nextCursor.direction.ordinal() + 1]; // direction++
+            if (map.getHeightDelta(cursor.position, nextCursor.position) < 0)
+                stack.addScore(map.getHeightDelta(cursor.position, nextCursor.position));
             return nextCursor;
         }
 
@@ -86,6 +88,8 @@ public class BackTracker {
             // return cursor with cursor.direction++
         }
 
+        if (map.getHeightDelta(cursor.position, nextPosition) > 0)
+            stack.addScore(map.getHeightDelta(cursor.position, nextPosition));
         return stack.push(cursor.direction, nextPosition).clone();
         // add cursor to stack and generate new cursor, new cursor has direction=LEFT by default
     }
@@ -95,9 +99,12 @@ public class BackTracker {
      * @return corrected previous cursor
      */
     public Pair skip() {
+        Pair prevCursor = stack.getLast();
         Pair nextCursor = stack.pop();
-
         nextCursor.direction = Direction.values()[nextCursor.direction.ordinal() + 1];
+
+        if (map.getHeightDelta(prevCursor.position, nextCursor.position) < 0)
+            stack.addScore(map.getHeightDelta(prevCursor.position, nextCursor.position));
         return nextCursor;
     }
 
@@ -105,17 +112,10 @@ public class BackTracker {
      * Save the current cursor as the best one and keep it away
      */
     public void saveBest() {
-        int score = 0;
-        for (int i = 0; i < stack.getSize() - 1; i++) {
-            int delta = map.getHeightDelta(stack.get(i).position, stack.get(i + 1).position);
-            if (delta > 0) {
-                score += delta;
-            }
-        }
-        if (score < bestScore || bestStack == null) {
-            bestScore = score;
+        if (stack.getScore() < bestScore || bestStack == null) {
+            bestScore = stack.getScore();
             bestStack = stack.clone();
-        } else if (score == bestScore && bestStack.getSize() > stack.getSize()) {
+        } else if (stack.getScore() == bestScore && bestStack.getSize() > stack.getSize()) {
             bestStack = stack.clone();
         }
     }
@@ -144,6 +144,9 @@ public class BackTracker {
                 saveBest();
                 cursor = skip(); // pretend that solution doesn't exist and go backward to test another
             }
+
+            if (stack.getScore() > bestScore && bestStack != null)
+                cursor = skip();
         }
 
         if (bestStack == null)

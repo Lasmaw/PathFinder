@@ -1,4 +1,5 @@
-package fr.pathfinder.backtrack;
+package fr.backtrack;
+
 import java.util.ArrayList;
 
 /**
@@ -7,6 +8,7 @@ import java.util.ArrayList;
  */
 public class Stack {
     public final ArrayList<Pair> dataStack = new ArrayList<>();
+    private int score = 0;
 
     /**
      * Push onto the stack direction and nextPosition
@@ -16,7 +18,7 @@ public class Stack {
      */
     public Pair push(Direction direction, Position nextPosition) {
         dataStack.get(0).direction = direction;
-        dataStack.add(0, new Pair(Direction.LEFT, nextPosition));
+        dataStack.add(0, new Pair(Direction.values()[0], nextPosition));
         return dataStack.get(0);
     }
 
@@ -98,5 +100,13 @@ public class Stack {
         for (Pair element : dataStack)
             clone.add(element.clone());
         return clone;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void addScore(int i) {
+        score += i;
     }
 }

@@ -1,4 +1,5 @@
-package fr.pathfinder.backtrack;
+package fr.backtrack;
+
 /**
  * A Pair contain a direction and position, used to return these two data in functions.
  * @author Safenein

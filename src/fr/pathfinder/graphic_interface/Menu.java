@@ -19,6 +19,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import fr.MapParser.MapParser;
+import fr.MapSaver.MapSaver;
 import fr.pathfinder.carte.CellMap;
 
 
@@ -59,16 +61,13 @@ public class Menu extends JFrame implements ActionListener {
 
         JMenuItem newCart = new JMenuItem("Nouvelle carte");
         JMenuItem openCart = new JMenuItem("Ouvrir une carte");
-        JMenuItem saveCart = new JMenuItem("Enregistrer la carte");
         menuFichier.add(newCart);
         menuFichier.add(openCart);
-        menuFichier.add(saveCart);
         
         setJMenuBar(barreDeMenu);
 
         newCart.addActionListener(new StartButtonListener());
         openCart.addActionListener(new fileChooser());
-        saveCart.addActionListener(new fileSaver());
         
 //************** Boutons menu **************//
         
@@ -77,7 +76,7 @@ public class Menu extends JFrame implements ActionListener {
         quitBtn = new JButton("Quitter");
         
         startBtn.addActionListener(new StartButtonListener());
-        openBtn.addActionListener(new OpenButtonListener());
+        openBtn.addActionListener(new fileChooser());
         quitBtn.addActionListener(new QuitButtonListener());
         
 //************** Panels **************//
@@ -123,73 +122,25 @@ public class Menu extends JFrame implements ActionListener {
     
 //************** Fenêtre modif **************//
 	
-	protected void saveToFile() {
-	    JFileChooser fileChooser = new JFileChooser();
-	    int retval = fileChooser.showSaveDialog(save);
-	    if (retval == JFileChooser.APPROVE_OPTION) {
-	      File file = fileChooser.getSelectedFile();
-	      if (file == null) {
-	        return;
-	      }
-	      if (!file.getName().toLowerCase().endsWith(".txt")) {
-	        file = new File(file.getParentFile(), file.getName() + ".txt");
-	      }
-	      try {
-	        textArea.write(new OutputStreamWriter(new FileOutputStream(file),
-	            "utf-8"));
-	        Desktop.getDesktop().open(file);
-	      } catch (Exception e) {
-	        e.printStackTrace();
-	      }
-	    }
-	}
 	
-	void initUI() {
-	    JFrame frame = new JFrame(Menu.class.getSimpleName());
-	    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	    textArea = new JTextArea(24, 80);
-	    save = new JButton("Save to file");
-	    save.addActionListener(e -> saveToFile());
-	    JPanel buttonPanel = new JPanel();
-	    buttonPanel.add(save);
-	    frame.add(buttonPanel, BorderLayout.SOUTH);
-	    frame.setSize(500, 400);
-	    frame.setVisible(true);
-	  }
-
-	private class fileCreater implements ActionListener {
-		public void actionPerformed(ActionEvent event) {
-			initUI();
-
-	    }
-	}
+	private class fileChooser implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			try {
+					MapParser mapParser = new MapParser();
+					int [][] mapToParse=mapParser.parse();
+					map=new CellMap(mapToParse);
+					dispose();
+					new Path(mapToParse.length, map);
 	
-	private class fileChooser implements ActionListener {
-		public void actionPerformed(ActionEvent event) {
-	        JFileChooser chooser = new JFileChooser();
-	        chooser.setVisible(true);
-	        int userSelec = chooser.showOpenDialog(Menu.this);
-	        File file = chooser.getSelectedFile();
-	    }
-	}
-	
-	private class fileSaver implements ActionListener {
-		public void actionPerformed(ActionEvent event) {
-			JFileChooser saver = new JFileChooser();
-			saver.setDialogTitle("Enregistrer le fichier");
-			saver.setVisible(true);
-			int usrSelec = saver.showSaveDialog(Menu.this);
-			
-			
-			if (usrSelec == JFileChooser.APPROVE_OPTION) {
-			    File fileToSave = saver.getSelectedFile();
-			    System.out.println("Enregistrer en tant que " + fileToSave.getAbsolutePath());
-			    
-			    
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-			
 		}
 	}
+	
+	
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

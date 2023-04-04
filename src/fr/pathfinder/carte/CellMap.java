@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.util.Random;
 
 
-import fr.pathfinder.backtrack.Position;
-import fr.pathfinder.backtrack.Map;
+import fr.backtrack.Position;
+import fr.backtrack.Map;
 
 public class CellMap {
 	
@@ -45,6 +45,20 @@ public class CellMap {
 			}
 			System.out.print("\n");
 		}
+	}
+	
+	public CellMap(int [][] map) {
+		this.size=map.length;
+		int i,j;
+		this.map=new Case[size][size];
+		for(i=0;i<size;i++) {
+			for(j=0;j<size;j++) {
+				this.map[i][j]=new Case(i,j,map[i][j]);
+
+			}
+			
+		}
+		
 	}
 	
 	

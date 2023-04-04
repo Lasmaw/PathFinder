@@ -1,4 +1,4 @@
-package fr.pathfinder.backtrack;
+package fr.backtrack;
 
 /**
  * Direction is all available direction on a 2D map
