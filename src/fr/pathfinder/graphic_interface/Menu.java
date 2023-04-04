@@ -1,18 +1,17 @@
 package fr.pathfinder.graphic_interface;
 
 import java.awt.BorderLayout;
-import java.awt.Desktop;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -20,7 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import fr.MapParser.MapParser;
-import fr.MapSaver.MapSaver;
 import fr.pathfinder.carte.CellMap;
 
 
@@ -30,6 +28,7 @@ public class Menu extends JFrame implements ActionListener {
 	
 	private JButton startBtn, openBtn, quitBtn;
 	private JPanel panelMenu, panelPath;
+	private Image logo;
 	CellMap map;
 	Path path;
 	
@@ -80,11 +79,15 @@ public class Menu extends JFrame implements ActionListener {
         quitBtn.addActionListener(new QuitButtonListener());
         
 //************** Panels **************//
-
+        
+        
+        
         panelMenu = new JPanel();
         panelMenu.add(startBtn);
         panelMenu.add(openBtn);
         panelMenu.add(quitBtn);
+        
+        
         
         panelPath = new JPanel();
 

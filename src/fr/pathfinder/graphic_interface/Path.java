@@ -140,8 +140,8 @@ public class Path extends JFrame implements ActionListener{
 					backTracker = new BackTracker(map.toBackTrackMap());
 					backTracker.resolve(new Position(map.start.posX,map.start.posY) , new Position(map.finish.posX,map.finish.posY));
 					for (Pair pair : backTracker.getStack().dataStack) {
-						map.map[pair.position.x][pair.position.y].btn.setBackground(new Color(255,102,255));
-						map.map[pair.position.x][pair.position.y].btn.setText("P");
+						map.map[pair.position.x][pair.position.y].btn.setBackground(Color.red);
+						map.map[pair.position.x][pair.position.y].btn.setForeground(Color.black);
 						
 					}
 					

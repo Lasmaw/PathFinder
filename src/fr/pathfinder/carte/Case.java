@@ -13,7 +13,6 @@ public class Case {
 	public int posY;
 	public int state;
 	public int value;
-	boolean clicked=false;
 	public Color color=Color.white;
 	public JButton btn=new JButton();
 	
@@ -37,9 +36,6 @@ public class Case {
 	}
 	
 	
-	void setClicked(boolean bool) {
-		this.clicked=bool;
-	}
 	
 	public void autoCol() {
 				
@@ -76,7 +72,6 @@ public class Case {
 		this.value=val;
 		setValue(val);
 		setState(0);
-		setClicked(false);
 		autoCol();
 	}
 	
