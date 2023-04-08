@@ -140,6 +140,11 @@ public class Path extends JFrame implements ActionListener{
 		private class BackTrackerStarter implements ActionListener { //this is starting the calculation of the path. Actionned when we press the "Lancer le calcul" button
 			public void actionPerformed(ActionEvent event) {
 				try {
+					 for (int i = 0; i < map.size; i++) { 
+				        	for (int j = 0; j < map.size; j++) {
+				        		map.map[i][j].autoCol();
+				        	}
+					 }
 					backTracker = new BackTracker(map.toBackTrackMap());
 					backTracker.resolve(new Position(map.start.posX,map.start.posY) , new Position(map.finish.posX,map.finish.posY));
 					for (Pair pair : backTracker.getStack().dataStack) {
