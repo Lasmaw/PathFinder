@@ -6,14 +6,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class MapParser extends Component {
+/**
+ * Map Parser is an object that load the map from a .txt file.
+ * @author Lasmaw
+ */
+
+public class MapParser extends Component { 
   private File file = null;
   private int [][] map = null;
 
-  public MapParser() {
+  public MapParser() { //this is creating a parser
   }
 
-  public int [][] parse() throws Exception {
+  public int [][] parse() throws Exception { //this function treat the .txt file and load every data from it
     try {
       JFileChooser chooser = new JFileChooser();
       chooser.setVisible(true);

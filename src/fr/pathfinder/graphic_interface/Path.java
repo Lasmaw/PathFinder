@@ -21,6 +21,11 @@ import fr.backtrack.Pair;
 import fr.backtrack.Position;
 import fr.pathfinder.carte.CellMap;
 
+/**
+ * Path is the object that create the window where we can see the map
+ * @author Lasmaw
+ */
+
 public class Path extends JFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
@@ -35,7 +40,7 @@ public class Path extends JFrame implements ActionListener{
 	
 	
 		
-		Path(int size, CellMap mapInput){
+		Path(int size, CellMap mapInput){ //this create the window with the specific map inside
 			
 			
 			//************** Données de la fenêtre **************//
@@ -85,9 +90,7 @@ public class Path extends JFrame implements ActionListener{
 	        pathPanel = new JPanel();
 
 	        getContentPane().add(pathPanel);
-	      //************** Panels **************//
-	        
-	        
+
 	        this.map=mapInput;
 			
 			this.size=size;
@@ -100,7 +103,7 @@ public class Path extends JFrame implements ActionListener{
 			pathPanel.setLayout(new GridLayout(size, size));
 			pathPanel.setBorder(BorderFactory.createEmptyBorder(100, 350, 50, 350)); // north, west , south, east
 		    
-		    for (int i = 0; i < map.size; i++) {
+		    for (int i = 0; i < map.size; i++) { //this loop create a button for each cell of the map and load it as the cell.btn
 	        	for (int j = 0; j < map.size; j++) {
 
 	        			JButton button = new JButton(String.valueOf(this.map.map[i][j].value));
@@ -134,7 +137,7 @@ public class Path extends JFrame implements ActionListener{
 		
 		
 		
-		private class BackTrackerStarter implements ActionListener {
+		private class BackTrackerStarter implements ActionListener { //this is starting the calculation of the path. Actionned when we press the "Lancer le calcul" button
 			public void actionPerformed(ActionEvent event) {
 				try {
 					backTracker = new BackTracker(map.toBackTrackMap());
@@ -153,7 +156,7 @@ public class Path extends JFrame implements ActionListener{
 		    }
 		}
 		
-		private class Randomize implements ActionListener {
+		private class Randomize implements ActionListener { //this is starting the randomizer. Actionned when we press the "Remplir les cases aléatoirement" button
 			public void actionPerformed(ActionEvent e) {
 				map.randomize(map.size+1);
 				backTracker=new BackTracker(map.toBackTrackMap());
@@ -161,7 +164,7 @@ public class Path extends JFrame implements ActionListener{
 			}
 		}
 		
-		private class fileChooser implements ActionListener{
+		private class fileChooser implements ActionListener{ //this opens the file chooser. It is used to load a map
 			public void actionPerformed(ActionEvent e) {
 				try {
 						MapParser mapParser = new MapParser();
@@ -178,7 +181,7 @@ public class Path extends JFrame implements ActionListener{
 		}
 		
 		
-		private class fileSaver implements ActionListener{
+		private class fileSaver implements ActionListener{ //this opens the file saver. It is used to save a map
 			public void actionPerformed(ActionEvent e) {
 				try {
 						MapSaver mapSaver = new MapSaver(Path.this.map.toBackTrackMap().heightMap);

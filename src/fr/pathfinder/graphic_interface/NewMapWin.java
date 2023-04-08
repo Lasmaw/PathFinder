@@ -12,6 +12,11 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+/**
+ * NewMapWin is an object that create a little window to choose the size of an empty map
+ * @author Lasmaw
+ */
+
 public class NewMapWin extends JFrame implements ChangeListener{
 
 	private static final long serialVersionUID = -3675206766922526803L;

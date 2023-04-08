@@ -2,12 +2,17 @@ package fr.pathfinder.graphic_interface;
 
 import java.awt.Color;
 
+/**
+ * ColorBoard is an object that gives a color to a case for each value
+ * @author Lasmaw
+ */
+
 public class ColorBoard {
 	
 	public Color[]colorBoard=new Color[120];
 	public Color[]colorFont=new Color[120];
 	
-	public ColorBoard(){
+	public ColorBoard(){ 
 		
 		for(int i=0;i<9;i++) {
 			this.colorBoard[9+(12*i)]=new Color(51,102,0);

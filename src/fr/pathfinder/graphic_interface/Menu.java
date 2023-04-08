@@ -21,6 +21,10 @@ import javax.swing.JTextArea;
 import fr.MapParser.MapParser;
 import fr.pathfinder.carte.CellMap;
 
+/**
+ * Menu is the object that create the main Window
+ * @author Lasmaw
+ */
 
 public class Menu extends JFrame implements ActionListener {
     
@@ -39,7 +43,7 @@ public class Menu extends JFrame implements ActionListener {
 		
 		
 		
-//************** Données de la fenêtre **************//
+//************** Window data **************//
 		
         super("PathFinder");
         
@@ -51,7 +55,8 @@ public class Menu extends JFrame implements ActionListener {
         setResizable(false);
         
         this.map=map;
-//************** Barre d'outils **************//
+        
+//************** Tools bar **************//
         
         JMenuBar barreDeMenu = new JMenuBar();
         
@@ -68,7 +73,7 @@ public class Menu extends JFrame implements ActionListener {
         newCart.addActionListener(new StartButtonListener());
         openCart.addActionListener(new fileChooser());
         
-//************** Boutons menu **************//
+//************** Menu buttons **************//
         
         startBtn = new JButton("Nouvelle Carte");
         openBtn = new JButton("Ouvrir une carte");
@@ -123,7 +128,7 @@ public class Menu extends JFrame implements ActionListener {
 	}
        
     
-//************** Fenêtre modif **************//
+//************** Open Window **************//
 	
 	
 	private class fileChooser implements ActionListener{

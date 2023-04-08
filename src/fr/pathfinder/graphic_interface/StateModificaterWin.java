@@ -16,8 +16,12 @@ import javax.swing.event.ChangeListener;
 import fr.pathfinder.carte.Case;
 import fr.pathfinder.carte.CellMap;
 
+/**
+ * StateModificaterWin is an object that generate a little window used to change the value and the state of a cell when we press on it
+ * @author Lasmaw
+ */
 
-public class StateModificaterWin extends JFrame implements ChangeListener{
+public class StateModificaterWin extends JFrame implements ChangeListener{ //this generate the window after clicking on a cell
 
 	private static final long serialVersionUID = 7964617219132017366L;
 
@@ -61,10 +65,10 @@ public class StateModificaterWin extends JFrame implements ChangeListener{
 		switcher.setMajorTickSpacing(1);
 
 		
-		btnValid.addActionListener((ActionListener) new ActionListener() {
+		btnValid.addActionListener((ActionListener) new ActionListener() { //this is a listener to know if something changed with the window. Then it will put the changes into the specific cell
 			public void actionPerformed(ActionEvent e) {
 				
-				switch(switcher.getValue()) {
+				switch(switcher.getValue()) { //this is a switch to see the new state of the cell
 				case -1:
 					usedMap.strtCount++;
 					if(usedMap.strtCount>0) {
@@ -133,7 +137,7 @@ public class StateModificaterWin extends JFrame implements ChangeListener{
 		getContentPane().validate();
 	}
 
-	public void stateChanged(ChangeEvent e) {
+	public void stateChanged(ChangeEvent e) { //this is a listener that detect a change. Here it detects the changes of the sliders
 		slot.value=slider.getValue();
 		slot.state=switcher.getValue();
 		valueLabel = new JLabel("Valeur : " + slider.getValue()); 

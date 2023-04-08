@@ -9,8 +9,8 @@ public class AppPathFinder {
 
 	public static void main(String[] args) {
 		
-		CellMap map = new CellMap(8);
-		//Ouvrir l'interface
+	
+		//Open the main window
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new Menu();

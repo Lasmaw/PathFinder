@@ -11,12 +11,12 @@ public class Case {
 	//Attributs
 	public int posX;
 	public int posY;
-	public int state;
+	public int state; //Start=-1, Finish=1, Neutral=0
 	public int value;
 	public Color color=Color.white;
 	public JButton btn=new JButton();
 	
-	//Méthodes
+	//Methods
 	
 	void setPosition(int x, int y) {
 		this.posX=x;
@@ -36,6 +36,7 @@ public class Case {
 	}
 	
 	
+	//this colorate the cell automatically
 	
 	public void autoCol() {
 				
@@ -67,7 +68,7 @@ public class Case {
 	}
 	
 	
-	public Case(int x, int y, int val){
+	public Case(int x, int y, int val){ //this create a new cell with a specific position and value
 		setPosition(x,y);
 		this.value=val;
 		setValue(val);

@@ -7,15 +7,20 @@ import java.io.PrintWriter;
 
 import javax.swing.JFileChooser;
 
-public class MapSaver extends Component {
+/**
+ * Map Saver is an object that save the map into a .txt file.
+ * @author Lasmaw
+ */
+
+public class MapSaver extends Component { 
   private File file = null;
   private int [][] map = null;
 
-  public MapSaver(int[][] map) {
+  public MapSaver(int[][] map) { //This is creating the saver
 	  this.map=map;
   }
 
-  public void save() throws Exception {
+  public void save() throws Exception { //This is the function to save all data into a .txt file
     try {
       JFileChooser chooser = new JFileChooser();
       chooser.setVisible(true);
@@ -31,7 +36,7 @@ public class MapSaver extends Component {
           printer.println(map[k][l]);
         }
       }
-      printer.println("$");
+      printer.println("$"); //a $ is set at the end so the load program know when the file is treated
       
       printer.close();
       
